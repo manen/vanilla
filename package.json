@@ -1,26 +1,35 @@
 {
-  "scripts": {
-    "start": "snowpack dev",
-    "build": "snowpack build",
-    "test": "web-test-runner \"src/**/*.test.ts\""
-  },
-  "dependencies": {
-    "svelte": "^3.37.0"
-  },
-  "devDependencies": {
-    "@snowpack/plugin-dotenv": "^2.1.0",
-    "@snowpack/plugin-svelte": "^3.6.1",
-    "@snowpack/plugin-typescript": "^1.2.1",
-    "@snowpack/web-test-runner-plugin": "^0.2.2",
-    "@testing-library/svelte": "^3.0.3",
-    "@tsconfig/svelte": "^1.0.10",
-    "@types/chai": "^4.2.17",
-    "@types/mocha": "^8.2.2",
-    "@types/snowpack-env": "^2.3.3",
-    "@web/test-runner": "^0.13.3",
-    "chai": "^4.3.4",
-    "snowpack": "^3.3.7",
-    "svelte-preprocess": "^4.7.2",
-    "typescript": "^4.3.4"
-  }
+	"name": "vanilla",
+	"version": "1.0.0",
+	"repository": "https://github.com/manen/vanilla",
+	"author": "manen <varga.bercel.i@gmail.com>",
+	"license": "GPL-3.0",
+	"private": true,
+	"scripts": {
+		"dev": "snowpack dev",
+		"build": "snowpack build",
+		"test": "web-test-runner \"src/**/*.test.ts\""
+	},
+	"dependencies": {
+		"svelte": "^3.37.0"
+	},
+	"devDependencies": {
+		"@snowpack/plugin-dotenv": "^2.1.0",
+		"@snowpack/plugin-svelte": "^3.6.1",
+		"@snowpack/plugin-typescript": "^1.2.1",
+		"@snowpack/web-test-runner-plugin": "^0.2.2",
+		"@testing-library/svelte": "^3.0.3",
+		"@tsconfig/svelte": "^1.0.10",
+		"@types/chai": "^4.2.17",
+		"@types/mocha": "^8.2.2",
+		"@types/snowpack-env": "^2.3.3",
+		"@web/test-runner": "^0.13.3",
+		"chai": "^4.3.4",
+		"eslint": "^7.30.0",
+		"prettier": "^2.3.2",
+		"snowpack": "^3.3.7",
+		"svelte-preprocess": "^4.7.2",
+		"typescript": "^4.3.4",
+		"typescript-eslint": "^0.0.1-alpha.0"
+	}
 }
