@@ -13,8 +13,8 @@
 	}
 
 	.title {
-		font-size: 1.2rem;
-		font-weight: bold;
+		font-size: 1.16rem;
+		color: #464646;
 	}
 
 	.buttons {
@@ -27,6 +27,10 @@
 	@media (prefers-color-scheme: dark) {
 		header {
 			background-color: #1a1b1c;
+		}
+
+		.title {
+			color: #afaeae;
 		}
 	}
 </style>

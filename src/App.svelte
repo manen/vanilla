@@ -2,24 +2,40 @@
 	import { Route, Router } from 'svelte-routing';
 	import Header from './components/page/Header.svelte';
 	import Index from './routes/index.svelte';
+	import Dashboard from './routes/dashboard.svelte';
 
 	export let url = '';
 </script>
 
 <Header />
-<div class="app">
+<main class="app">
 	<Router {url}>
 		<Route path="/" component={Index} />
+		<Route path="/dashboard" component={Dashboard} />
 	</Router>
-</div>
+</main>
 
 <style>
+	main {
+		margin: 1rem;
+	}
+
 	:global(html),
 	:global(body) {
 		margin: 0px;
 		padding: 0px;
 		background-color: #ffffff;
 		color: #000000;
+	}
+
+	:global(h1),
+	:global(h2),
+	:global(h3),
+	:global(h4),
+	:global(h5),
+	:global(h6) {
+		margin: 0px;
+		padding: 0px;
 	}
 
 	@media (prefers-color-scheme: dark) {
