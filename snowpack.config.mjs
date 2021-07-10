@@ -17,8 +17,12 @@ export default {
 	],
 	routes: [{ match: 'routes', src: '.*', dest: '/index.html' }],
 	optimize: {
-		/* Example: Bundle your final build: */
-		// "bundle": true,
+		bundle: true,
+		sourcemap: false,
+		splitting: true,
+		treeshake: true,
+		minify: true,
+		target: 'es2020',
 	},
 	packageOptions: {
 		/* ... */
