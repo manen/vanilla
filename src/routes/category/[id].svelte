@@ -16,7 +16,7 @@
 			<div class="categories-length">{$c.items.length} subcategories</div>
 		</div>
 	</div>
-	<List list={$c} />
+	<List list={$c} {id} />
 </div>
 
 <style>

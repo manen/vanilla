@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import type { Readable, Updater } from 'svelte/store';
+import { nanoid } from 'nanoid';
 
 // # Design
 //
@@ -41,9 +42,22 @@ export interface List {
 	items: string[];
 	categories: string[];
 }
-export interface MainStore extends Readable<Main> {}
-export interface CategoryStore extends Readable<Category> {}
-export interface ItemStore extends Readable<Item> {}
+export interface MainStore extends Readable<Main> {
+	pushItem(...items: Item[]): void;
+	pushCategory(...categories: Category[]): void;
+}
+export interface CategoryStore extends Readable<Category> {
+	pushItem(...items: Item[]): void;
+	pushCategory(...categories: Category[]): void;
+	setName(name: string): void;
+	set(category: Category): void;
+}
+export interface ItemStore extends Readable<Item> {
+	setName(name: string): void;
+	setAmount(amount: number): void;
+	setUnit(unit: string): void;
+	set(item: Item): void;
+}
 
 const mainID = () => 'data-main';
 const categoryID = (id: string) => `data-category-${id}`;
@@ -52,6 +66,54 @@ const itemID = (id: string) => `data-item-${id}`;
 const main: MainStore = createMain();
 const categoryCache: Record<string, CategoryStore> = {};
 const itemCache: Record<string, ItemStore> = {};
+
+function createItemID(newItem: Item): string {
+	const id = nanoid();
+	const s = item(id);
+	s.set(newItem);
+
+	return id;
+}
+function pushItemID(update: (fn: Updater<any>) => void, ...items: string[]) {
+	update((list: Main | Category) => {
+		list.items.push(...items);
+		return list;
+	});
+}
+function createPushItem(
+	update: (fn: Updater<any>) => void
+): (...items: Item[]) => void {
+	return (...items) => {
+		pushItemID(update, ...items.map((item) => createItemID(item)));
+	};
+}
+
+function createCategoryID(newCategory: Category): string {
+	const id = nanoid();
+	const s = category(id);
+	s.set(newCategory);
+
+	return id;
+}
+function pushCategoryID(
+	update: (fn: Updater<any>) => void,
+	...categories: string[]
+) {
+	update((list: Main | Category) => {
+		list.categories.push(...categories);
+		return list;
+	});
+}
+function createPushCategory(
+	update: (fn: Updater<any>) => void
+): (...categories: Category[]) => void {
+	return (...categories) => {
+		pushCategoryID(
+			update,
+			...categories.map((category) => createCategoryID(category))
+		);
+	};
+}
 
 function createMain(): MainStore {
 	const raw = writable<Main>(
@@ -77,6 +139,8 @@ function createMain(): MainStore {
 
 	return {
 		subscribe: raw.subscribe,
+		pushItem: createPushItem(update),
+		pushCategory: createPushCategory(update),
 	};
 }
 function createCategory(id: string): CategoryStore {
@@ -98,8 +162,19 @@ function createCategory(id: string): CategoryStore {
 		});
 	}
 
+	function setName(name: string) {
+		update((category) => {
+			category.name = name;
+			return category;
+		});
+	}
+
 	return {
 		subscribe: raw.subscribe,
+		pushItem: createPushItem(update),
+		pushCategory: createPushCategory(update),
+		setName,
+		set,
 	};
 }
 function createItem(id: string): ItemStore {
@@ -121,8 +196,31 @@ function createItem(id: string): ItemStore {
 		});
 	}
 
+	function setName(name: string) {
+		update((i) => {
+			i.name = name;
+			return i;
+		});
+	}
+	function setAmount(amount: number) {
+		update((i) => {
+			i.amount = amount;
+			return i;
+		});
+	}
+	function setUnit(unit: string) {
+		update((i) => {
+			i.unit = unit;
+			return i;
+		});
+	}
+
 	return {
 		subscribe: raw.subscribe,
+		setName,
+		setAmount,
+		setUnit,
+		set,
 	};
 }
 

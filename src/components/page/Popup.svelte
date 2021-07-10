@@ -4,13 +4,11 @@
 	import { sineIn, sineInOut } from 'svelte/easing';
 
 	export let component: typeof SvelteComponent;
+	export let props: Record<string, any> = {};
 	export let visible = true;
 
 	function hide() {
 		visible = false;
-	}
-	function show() {
-		visible = true;
 	}
 </script>
 
@@ -21,8 +19,8 @@
 		on:click={hide}
 		class="popup-container"
 	>
-		<div class="popup">
-			<svelte:component this={component} />
+		<div on:click|stopPropagation={() => {}} class="popup">
+			<svelte:component this={component} on:done={hide} {...props} />
 		</div>
 	</div>
 {/if}
@@ -45,6 +43,7 @@
 	.popup {
 		min-width: 15rem;
 		min-height: 10rem;
+		padding: 1rem;
 		display: grid;
 		place-items: center;
 		background-color: hsl(0, 0%, 94%);

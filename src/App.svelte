@@ -24,14 +24,16 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-	:global(button) {
-		background-color: hsl(0, 0%, 93%);
+	:global(button),
+	:global(input) {
+		background-color: hsl(0, 0%, 90%);
 		padding: 1rem;
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
+		padding-top: 0.65rem;
+		padding-bottom: 0.65rem;
 		border-width: 0px;
 		border-radius: 0.6rem;
 		font-size: 0.96rem;
+		min-width: 0px;
 	}
 
 	:global(html),
@@ -64,7 +66,8 @@
 			color: #dddddd;
 		}
 
-		:global(button) {
+		:global(button),
+		:global(input) {
 			background-color: hsl(210, 5%, 14%);
 			color: #dddddd;
 		}

@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { link } from 'svelte-routing';
-	import CategoryWidget from './CategoryWidget.svelte';
-	import ItemWidget from './ItemWidget.svelte';
+	import CategoryWidget from './Category.svelte';
+	import ItemWidget from './Item.svelte';
 
 	import { flatItems } from '../../utils';
 	import type { List } from '../../stores';
 	import Popup from '../page/Popup.svelte';
-	import NewItem from './NewItem.svelte';
-	import NewCategory from './NewCategory.svelte';
+	import NewItem from '../new/Item.svelte';
+	import NewCategory from '../new/Category.svelte';
 
 	export let list: List;
+	export let id: string | undefined = undefined;
 	export let flat: boolean = false;
 
 	let newItemVisible = false;
@@ -67,8 +68,16 @@
 		{/if}
 	</div>
 </div>
-<Popup component={NewItem} bind:visible={newItemVisible} />
-<Popup component={NewCategory} bind:visible={newCategoryVisible} />
+<Popup
+	component={NewItem}
+	bind:visible={newItemVisible}
+	props={{ parent: id }}
+/>
+<Popup
+	component={NewCategory}
+	bind:visible={newCategoryVisible}
+	props={{ parent: id }}
+/>
 
 <style>
 	a {
