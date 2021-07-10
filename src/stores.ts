@@ -57,7 +57,10 @@ function createMain(): MainStore {
 	const raw = writable<Main>(
 		localStorage.getItem(mainID())
 			? JSON.parse(localStorage.getItem(mainID()) || '{}')
-			: { items: [] }
+			: {
+					items: [],
+					categories: [],
+			  }
 	);
 
 	function set(value: Main) {

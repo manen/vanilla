@@ -1,10 +1,15 @@
 <script lang="ts">
 	import { link } from 'svelte-routing';
+	import settingsIcon from '../../../public/icons/settings.svg';
 </script>
 
 <header>
 	<a class="title" use:link href="/dashboard">Vanilla</a>
-	<div class="buttons" />
+	<div class="buttons">
+		<a use:link href="/settings"
+			><img class="button" src={settingsIcon} alt="Settings button" /></a
+		>
+	</div>
 </header>
 
 <style>
@@ -17,6 +22,8 @@
 	}
 
 	.title {
+		display: grid;
+		place-items: center;
 		font-size: 1.16rem;
 		color: #464646;
 		text-decoration: none;
@@ -25,8 +32,15 @@
 	.buttons {
 		display: grid;
 		gap: 0.6rem;
-		grid-auto-flow: column;
+		grid-template-columns: 1.6rem;
 		justify-content: right;
+	}
+	.button {
+		width: 100%;
+		height: 100%;
+		display: grid;
+		place-items: center;
+		opacity: 0.64;
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -36,6 +50,10 @@
 
 		.title {
 			color: #afaeae;
+		}
+
+		.button {
+			filter: invert(1);
 		}
 	}
 </style>

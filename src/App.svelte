@@ -5,6 +5,7 @@
 	import Dashboard from './routes/dashboard.svelte';
 	import ItemID from './routes/item/[id].svelte';
 	import CategoryID from './routes/category/[id].svelte';
+	import Settings from './routes/settings.svelte';
 
 	export let url = '';
 </script>
@@ -16,6 +17,7 @@
 		<Route path="/dashboard" component={Dashboard} />
 		<Route path="/item/:id" component={ItemID} />
 		<Route path="/category/:id" component={CategoryID} />
+		<Route path="/settings" component={Settings} />
 	</Router>
 </main>
 
@@ -24,12 +26,15 @@
 		margin: 1rem;
 	}
 
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 	:global(html),
 	:global(body) {
 		margin: 0px;
 		padding: 0px;
 		background-color: #ffffff;
 		color: #000000;
+		font-family: 'Roboto', sans-serif;
 	}
 
 	:global(h1),
