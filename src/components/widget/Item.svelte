@@ -10,7 +10,9 @@
 <div class="widget">
 	<div class="name">{$item.name}</div>
 	<div class="amount">
-		{$item.amount} <span class="unit">{$item.unit}</span>
+		{#if $item.amount > 1 || $item.unit}
+			{$item.amount} <span class="unit">{$item.unit}</span>
+		{/if}
 	</div>
 </div>
 
