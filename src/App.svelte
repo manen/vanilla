@@ -22,10 +22,6 @@
 </main>
 
 <style>
-	main {
-		margin: 1rem;
-	}
-
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 	:global(html),
@@ -45,6 +41,10 @@
 	:global(h6) {
 		margin: 0px;
 		padding: 0px;
+	}
+
+	main {
+		margin: 1rem;
 	}
 
 	@media (prefers-color-scheme: dark) {
