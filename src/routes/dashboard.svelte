@@ -3,4 +3,4 @@
 	import List from '../components/widget/List.svelte';
 </script>
 
-<List list={$main} />
+<List list={$main} flat={true} />

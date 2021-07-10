@@ -37,6 +37,10 @@ export interface Item {
 	amount: number;
 	unit: string;
 }
+export interface List {
+	items: string[];
+	categories: string[];
+}
 export interface MainStore extends Readable<Main> {}
 export interface CategoryStore extends Readable<Category> {}
 export interface ItemStore extends Readable<Item> {}

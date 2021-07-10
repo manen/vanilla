@@ -3,15 +3,25 @@
 	import CategoryWidget from './CategoryWidget.svelte';
 	import ItemWidget from './ItemWidget.svelte';
 
-	export let list: { items: string[]; categories: string[] };
+	import { flatItems } from '../../utils';
+	import type { List } from '../../stores';
+
+	export let list: List;
+	export let flat: boolean = false;
 </script>
 
 <div class="overview">
 	<div>
-		<h2 class="title">Items</h2>
-		{#if list.items.length > 0}
+		<h2 class="title">
+			{#if flat}
+				All items
+			{:else}
+				Items
+			{/if}
+		</h2>
+		{#if (flat ? flatItems(list) : list.items).length > 0}
 			<div class="items">
-				{#each list.items as id}
+				{#each flat ? flatItems(list) : list.items as id}
 					<a use:link href="/item/{id}"><ItemWidget {id} /></a>
 				{/each}
 			</div>
