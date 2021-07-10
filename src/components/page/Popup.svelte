@@ -41,8 +41,6 @@
 	}
 
 	.popup {
-		min-width: 15rem;
-		min-height: 10rem;
 		padding: 1rem;
 		display: grid;
 		place-items: center;
