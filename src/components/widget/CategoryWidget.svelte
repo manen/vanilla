@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { category as get } from '../../stores';
+	import type { CategoryStore } from '../../stores';
 
 	export let id = '';
-	let category = get(id);
+	let category: CategoryStore = get(id);
 	$: category = get(id);
 </script>
 

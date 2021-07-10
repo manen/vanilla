@@ -1,5 +1,9 @@
+<script lang="ts">
+	import { link } from 'svelte-routing';
+</script>
+
 <header>
-	<div class="title">Vanilla</div>
+	<a class="title" use:link href="/dashboard">Vanilla</a>
 	<div class="buttons" />
 </header>
 
@@ -15,6 +19,7 @@
 	.title {
 		font-size: 1.16rem;
 		color: #464646;
+		text-decoration: none;
 	}
 
 	.buttons {

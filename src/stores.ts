@@ -27,19 +27,19 @@ interface Main {
 	items: string[];
 	categories: string[];
 }
-interface Category {
+export interface Category {
 	name: string;
 	items: string[];
 	categories: string[];
 }
-interface Item {
+export interface Item {
 	name: string;
 	amount: number;
 	unit: string;
 }
-interface MainStore extends Readable<Main> {}
-interface CategoryStore extends Readable<Category> {}
-interface ItemStore extends Readable<Item> {}
+export interface MainStore extends Readable<Main> {}
+export interface CategoryStore extends Readable<Category> {}
+export interface ItemStore extends Readable<Item> {}
 
 const mainID = () => 'data-main';
 const categoryID = (id: string) => `data-category-${id}`;

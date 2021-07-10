@@ -3,6 +3,8 @@
 	import Header from './components/page/Header.svelte';
 	import Index from './routes/index.svelte';
 	import Dashboard from './routes/dashboard.svelte';
+	import ItemID from './routes/item/[id].svelte';
+	import CategoryID from './routes/category/[id].svelte';
 
 	export let url = '';
 </script>
@@ -12,6 +14,8 @@
 	<Router {url}>
 		<Route path="/" component={Index} />
 		<Route path="/dashboard" component={Dashboard} />
+		<Route path="/item/:id" component={ItemID} />
+		<Route path="/category/:id" component={CategoryID} />
 	</Router>
 </main>
 
