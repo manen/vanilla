@@ -5,20 +5,40 @@
 
 	import { flatItems } from '../../utils';
 	import type { List } from '../../stores';
+	import Popup from '../page/Popup.svelte';
+	import NewItem from './NewItem.svelte';
+	import NewCategory from './NewCategory.svelte';
 
 	export let list: List;
 	export let flat: boolean = false;
+
+	let newItemVisible = false;
+	let newCategoryVisible = false;
+
+	function newItemClick() {
+		newCategoryVisible = false;
+		newItemVisible = true;
+	}
+	function newCategoryClick() {
+		newItemVisible = false;
+		newCategoryVisible = true;
+	}
 </script>
 
 <div class="overview">
 	<div>
-		<h2 class="title">
-			{#if flat}
-				All items
-			{:else}
-				Items
-			{/if}
-		</h2>
+		<div class="title">
+			<h2 class="title-text">
+				{#if flat}
+					All items
+				{:else}
+					Items
+				{/if}
+			</h2>
+			<div class="new-container">
+				<button class="new" on:click={newItemClick}>New</button>
+			</div>
+		</div>
 		{#if (flat ? flatItems(list) : list.items).length > 0}
 			<div class="items">
 				{#each flat ? flatItems(list) : list.items as id}
@@ -30,7 +50,12 @@
 		{/if}
 	</div>
 	<div>
-		<h2 class="title">Categories</h2>
+		<div class="title">
+			<h2 class="title-text">Categories</h2>
+			<div class="new-container">
+				<button class="new" on:click={newCategoryClick}>New</button>
+			</div>
+		</div>
 		{#if list.categories.length > 0}
 			<div class="categories">
 				{#each list.categories as id}
@@ -42,6 +67,8 @@
 		{/if}
 	</div>
 </div>
+<Popup component={NewItem} bind:visible={newItemVisible} />
+<Popup component={NewCategory} bind:visible={newCategoryVisible} />
 
 <style>
 	a {
@@ -55,8 +82,18 @@
 		grid-template-columns: repeat(2, 1fr);
 	}
 	.title {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+	.title-text {
 		font-size: 1.4rem;
 	}
+	.new-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+	}
+
 	.empty {
 		padding: 1.4rem;
 		display: grid;

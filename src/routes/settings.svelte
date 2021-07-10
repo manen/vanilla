@@ -2,7 +2,9 @@
 </script>
 
 <div class="copyright-container">
-	<div class="copyright">Icons by Freepik <span class="emoji">❤️</span></div>
+	<div class="copyright">
+		Icons by Pixel Perfect <span class="emoji">❤️</span>
+	</div>
 </div>
 
 <style>

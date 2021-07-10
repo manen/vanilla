@@ -7,6 +7,7 @@ export default {
 	plugins: [
 		'@snowpack/plugin-svelte',
 		'@snowpack/plugin-dotenv',
+		'@snowpack/plugin-postcss',
 		[
 			'@snowpack/plugin-typescript',
 			{

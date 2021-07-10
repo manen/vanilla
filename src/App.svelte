@@ -24,6 +24,16 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+	:global(button) {
+		background-color: hsl(0, 0%, 93%);
+		padding: 1rem;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		border-width: 0px;
+		border-radius: 0.6rem;
+		font-size: 0.96rem;
+	}
+
 	:global(html),
 	:global(body) {
 		margin: 0px;
@@ -51,6 +61,11 @@
 		:global(html),
 		:global(body) {
 			background-color: #141516;
+			color: #dddddd;
+		}
+
+		:global(button) {
+			background-color: hsl(210, 5%, 14%);
 			color: #dddddd;
 		}
 
