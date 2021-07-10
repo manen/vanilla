@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { link } from 'svelte-routing';
-	import settingsIcon from '../../../public/icons/settings.svg';
 </script>
 
 <header>
 	<a class="title" use:link href="/dashboard">Vanilla</a>
 	<div class="buttons">
 		<a use:link href="/settings"
-			><img class="button" src={settingsIcon} alt="Settings button" /></a
+			><img class="button" src="/icons/settings.svg" alt="Settings button" /></a
 		>
 	</div>
 </header>
