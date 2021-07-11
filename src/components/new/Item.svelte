@@ -19,7 +19,7 @@
 	}
 </script>
 
-<div class="new">
+<form on:submit|preventDefault={create} class="new">
 	<input type="text" bind:value={name} class="name" placeholder="Name" />
 	<input
 		type="number"
@@ -28,8 +28,8 @@
 		placeholder="Amount"
 	/>
 	<input type="text" bind:value={unit} class="unit" placeholder="Unit" />
-	<button type="submit" on:click={create} class="create">Create {name}</button>
-</div>
+	<button type="submit" class="create">Create {name}</button>
+</form>
 
 <style>
 	.new {

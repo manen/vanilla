@@ -3,7 +3,7 @@
 
 <div class="copyright-container">
 	<div class="copyright">
-		Icons by Pixel Perfect <span class="emoji">❤️</span>
+		Icons by Pixel Perfect and Freepik <span class="emoji">❤️</span>
 	</div>
 </div>
 

@@ -1,13 +1,25 @@
 <script lang="ts">
 	import { Route, Router } from 'svelte-routing';
+	import Popup from './components/page/Popup.svelte';
 	import Header from './components/page/Header.svelte';
 	import Index from './routes/index.svelte';
 	import Dashboard from './routes/dashboard.svelte';
 	import ItemID from './routes/item/[id].svelte';
 	import CategoryID from './routes/category/[id].svelte';
 	import Settings from './routes/settings.svelte';
+	import Alert from './components/page/Alert.svelte';
 
 	export let url = '';
+
+	// SW
+	let noSW = false;
+	if ('serviceWorker' in navigator) {
+		(async () => {
+			await navigator.serviceWorker.register('/sw.js');
+		})().catch(alert);
+	} else {
+		noSW = true;
+	}
 </script>
 
 <Header />
@@ -20,6 +32,10 @@
 		<Route path="/settings" component={Settings} />
 	</Router>
 </main>
+<Alert
+	text="Your browser does not support service workers. Vanilla won't be able to work offline"
+	bind:visible={noSW}
+/>
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');

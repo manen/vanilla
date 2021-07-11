@@ -3,7 +3,7 @@
 	import { fade } from 'svelte/transition';
 	import { sineIn, sineInOut } from 'svelte/easing';
 
-	export let component: typeof SvelteComponent;
+	export let component: typeof SvelteComponent | undefined = undefined;
 	export let props: Record<string, any> = {};
 	export let visible = true;
 
@@ -20,7 +20,11 @@
 		class="popup-container"
 	>
 		<div on:click|stopPropagation={() => {}} class="popup">
-			<svelte:component this={component} on:done={hide} {...props} />
+			{#if component}
+				<svelte:component this={component} on:done={hide} {...props} />
+			{:else}
+				<slot {...props} />
+			{/if}
 		</div>
 	</div>
 {/if}
@@ -46,6 +50,7 @@
 		place-items: center;
 		background-color: hsl(0, 0%, 94%);
 		border-radius: 1rem;
+		max-width: 75vw;
 	}
 
 	@media (prefers-color-scheme: dark) {

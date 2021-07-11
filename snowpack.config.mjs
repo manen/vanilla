@@ -1,8 +1,8 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
-export default {
+const config = {
 	mount: {
 		public: { url: '/', static: true },
-		src: { url: '/dist' },
+		src: { url: '/' },
 	},
 	plugins: [
 		'@snowpack/plugin-svelte',
@@ -24,6 +24,7 @@ export default {
 		treeshake: true,
 		minify: true,
 		target: 'es2020',
+		entrypoints: ['src/index.ts', 'src/sw.ts'],
 	},
 	packageOptions: {
 		/* ... */
@@ -35,3 +36,5 @@ export default {
 		/* ... */
 	},
 };
+
+export default config;
