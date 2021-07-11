@@ -24,7 +24,7 @@ import { nanoid } from 'nanoid';
 // We'd have a main store, and 2 cached functions for getting category and item
 // stores
 
-interface Main {
+export interface Main {
 	items: string[];
 	categories: string[];
 }
