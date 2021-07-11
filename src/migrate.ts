@@ -66,9 +66,15 @@ function getCurrent(version: Version): MigratableData {
 							return {
 								...c,
 								categories: [],
-								items: c.items.map((id: string) =>
-									JSON.parse(localStorage.getItem(`item-${id}`) || '{}')
-								),
+								items: c.items.map((id: string) => {
+									const raw = JSON.parse(
+										localStorage.getItem(`item-${id}`) || '{}'
+									);
+									return {
+										...raw,
+										amount: raw.amount || 1,
+									};
+								}),
 							};
 						}
 					),
