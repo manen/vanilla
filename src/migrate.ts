@@ -86,6 +86,22 @@ function getCurrent(version: Version): MigratableData {
 				items: MigratableItem[];
 				categories: MigratableCategory[];
 			} {
+				console.log({
+					items: items.map((id) =>
+						JSON.parse(localStorage.getItem(`data-item-${id}`) || '{}')
+					),
+					categories: categories.map((id) => {
+						const data = JSON.parse(
+							localStorage.getItem(`data-category-${id}`) || '{}'
+						);
+						const list = serializeList(data);
+						console.log({ ...data, list });
+						return {
+							...data,
+							list,
+						};
+					}),
+				});
 				return {
 					items: items.map((id) =>
 						JSON.parse(localStorage.getItem(`data-item-${id}`) || '{}')
@@ -97,7 +113,7 @@ function getCurrent(version: Version): MigratableData {
 						const list = serializeList(data);
 						return {
 							...data,
-							list,
+							...list,
 						};
 					}),
 				};
@@ -106,12 +122,15 @@ function getCurrent(version: Version): MigratableData {
 			return {
 				main: {
 					...mainRaw,
+					items: mainRaw.items.map((id: string) =>
+						JSON.parse(localStorage.getItem(`data-item-${id}`) || '{}')
+					),
 					categories: mainRaw.categories.map((id: string) => {
 						const data = JSON.parse(
 							localStorage.getItem(`data-category-${id}`) || '{}'
 						);
 						const list = serializeList(data);
-						return { ...data, list };
+						return { ...data, ...list };
 					}),
 				},
 			};
@@ -147,10 +166,17 @@ function toCurrent(to: Version, data: MigratableData) {
 					items: data.main.items.map((i) => {
 						const id = nanoid();
 						localStorage.setItem(`data-item-${id}`, JSON.stringify(i));
+						return id;
 					}),
 					categories: data.main.categories.map(deserializeCategory),
 				})
 			);
 			break;
 	}
+}
+export function exportData(): string {
+	return btoa(JSON.stringify(getCurrent(current)));
+}
+export function importData(data: string) {
+	toCurrent(current, JSON.parse(atob(data)));
 }

@@ -16,8 +16,15 @@
 	let swFail = false;
 	if ('serviceWorker' in navigator) {
 		(async () => {
+			const registered =
+				(await navigator.serviceWorker.getRegistrations()).length == 0;
 			await navigator.serviceWorker.register('/sw.js');
-		})().catch(() => (swFail = true && !location.href.includes('localhost'))); // Snowpack doesn't make sw.js correctly so it will fail on localhost
+			if (registered) location.reload();
+		})().catch((e) => {
+			// Snowpack doesn't make sw.js correctly so it will fail on localhost
+			console.log(e);
+			swFail = true && !location.href.includes('localhost');
+		});
 	} else {
 		noSW = true;
 	}
