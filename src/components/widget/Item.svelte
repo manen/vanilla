@@ -13,8 +13,8 @@
 		: undefined;
 	$: c = $item.parent ? category($item.parent) : undefined;
 
-	let co: Color | undefined = c ? findColor(c) : undefined;
-	$: co = c ? findColor(c) : undefined;
+	let co: Color | undefined = c ? findColor($c) : undefined;
+	$: co = c ? findColor($c) : undefined;
 </script>
 
 <div class={`widget ${co || ''}`}>

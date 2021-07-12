@@ -8,8 +8,8 @@
 	let c: CategoryStore = get(id);
 	$: c = get(id);
 
-	let co: Color | undefined = c ? findColor(c) : undefined;
-	$: co = c ? findColor(c) : undefined;
+	let co: Color | undefined = c ? findColor($c) : undefined;
+	$: co = c ? findColor($c) : undefined;
 </script>
 
 <div class={`widget ${co || ''}`}>

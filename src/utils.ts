@@ -11,13 +11,14 @@ export function flatItems({ items, categories }: List): string[] {
 	return total;
 }
 
-export function findColor(cs: CategoryStore): Color {
+export function findColor(c: Category): Color {
 	let color: Color = undefined;
-	cs.subscribe((c) => {
-		if (c.color) color = c.color;
-		else if (!c.parent) return;
-		else color = findColor(category(c.parent));
-	})();
+
+	if (c.color) color = c.color;
+	else if (!c.parent) return;
+	else {
+		category(c.parent).subscribe((cs) => (color = findColor(cs)));
+	}
 
 	return color;
 }

@@ -27,6 +27,7 @@
 			});
 		} else {
 			c?.setName(name);
+			c?.setColor(color);
 		}
 		dispatch('done');
 	}

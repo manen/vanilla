@@ -56,6 +56,7 @@ export interface CategoryStore extends Readable<Category> {
 	pushItem(...items: Item[]): void;
 	pushCategory(...categories: Category[]): void;
 	setName(name: string): void;
+	setColor(color: Color): void;
 	set(category: Category): void;
 	removeItem(id: string): void;
 	removeCategory(id: string): void;
@@ -180,7 +181,6 @@ function createMain(): MainStore {
 	};
 }
 function createCategory(id: string): CategoryStore {
-	console.log(`Creating category ${id}`);
 	const raw = writable<Category>(
 		localStorage.getItem(categoryID(id))
 			? JSON.parse(localStorage.getItem(categoryID(id)) || '')
@@ -202,6 +202,12 @@ function createCategory(id: string): CategoryStore {
 	function setName(name: string) {
 		update((category) => {
 			category.name = name;
+			return category;
+		});
+	}
+	function setColor(color: Color) {
+		update((category) => {
+			category.color = color;
 			return category;
 		});
 	}
@@ -232,6 +238,7 @@ function createCategory(id: string): CategoryStore {
 		pushItem: createPushItem(update, id),
 		pushCategory: createPushCategory(update, id),
 		setName,
+		setColor,
 		set,
 		removeItem,
 		removeCategory,
