@@ -2608,6 +2608,11 @@ log-update@^4.0.0:
     slice-ansi "^4.0.0"
     wrap-ansi "^6.2.0"
 
+longpress-svelte@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/longpress-svelte/-/longpress-svelte-1.0.0.tgz#4d182a4d08e214cf64a5e28f0acbf1d4cdf297d3"
+  integrity sha512-szGKbBpQxwjcl2bHWJShM7pRi/944muMQtzNHbn870pAdh1DIWZr1ExS2+ncL47MlR43HbBM1WnQ1uIA44CVrg==
+
 lower-case@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/lower-case/-/lower-case-2.0.2.tgz#6fa237c63dbdc4a82ca0fd882e4722dc5e634e28"

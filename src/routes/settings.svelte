@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { settings } from '../stores';
+
 	import Popup from '../components/page/Popup.svelte';
 	import Export from '../components/settings/Export.svelte';
 	import Import from '../components/settings/Import.svelte';
@@ -22,7 +24,10 @@
 </div>
 <div class="copyright-container">
 	<div class="copyright">
-		Icons by Pixel Perfect and Freepik <span class="emoji">❤️</span>
+		<div class="join-date">
+			Joined {new Date($settings.joinDate || Date.now()).toLocaleDateString()} 🌱
+		</div>
+		Icons by Pixel Perfect and Freepik<span class="emoji">❤️</span>
 	</div>
 </div>
 <Popup bind:visible={exportVisible} component={Export} />
@@ -51,6 +56,7 @@
 		bottom: 0.84rem;
 		left: 0px;
 		width: 100vw;
+		text-align: center;
 	}
 	.copyright {
 		color: #454545;

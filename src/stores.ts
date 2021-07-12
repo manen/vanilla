@@ -302,4 +302,41 @@ function item(id: string): ItemStore {
 	}
 }
 
-export { main, category, item };
+const joinDateID = 'settings-join-date';
+
+interface Settings {
+	joinDate?: number;
+}
+interface SettingsStore extends Readable<Settings> {
+	setJoinDate(joinDate: number): void;
+	set(settings: Settings): void;
+}
+
+function createSettings(): SettingsStore {
+	const raw = writable<Settings>({
+		joinDate: localStorage.getItem(joinDateID)
+			? JSON.parse(localStorage.getItem(joinDateID) || `${Date.now()}`)
+			: undefined,
+	});
+
+	function setJoinDate(joinDate: number) {
+		raw.update((s) => {
+			s.joinDate = joinDate;
+			return s;
+		});
+		localStorage.setItem(joinDateID, JSON.stringify(joinDate));
+	}
+	function set(settings: Settings) {
+		localStorage.setItem(joinDateID, JSON.stringify(settings.joinDate));
+	}
+
+	return {
+		subscribe: raw.subscribe,
+		setJoinDate,
+		set,
+	};
+}
+
+const settings = createSettings();
+
+export { main, category, item, settings };

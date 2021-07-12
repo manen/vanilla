@@ -8,6 +8,7 @@
 	import Settings from './routes/settings.svelte';
 	import Alert from './components/page/Alert.svelte';
 	import { didJustMigrate, migrateIfNeeded } from './migrate';
+	import { settings } from './stores';
 
 	export let url = '';
 
@@ -38,6 +39,11 @@
 		// we need this here, otherwise it would immediately trigger before the
 		// refresh, and the popup would disappear after the reload
 		justMigrated = didJustMigrate();
+	}
+
+	// Settings auto
+	if (!$settings.joinDate) {
+		$settings.joinDate = Date.now();
 	}
 </script>
 

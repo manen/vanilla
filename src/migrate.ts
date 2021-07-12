@@ -21,6 +21,9 @@ interface MigratableData {
 		items: MigratableItem[];
 		categories: MigratableCategory[];
 	};
+	settings: {
+		joinDate: number;
+	};
 }
 
 function getVersion(): Version {
@@ -78,6 +81,11 @@ function getCurrent(version: Version): MigratableData {
 								}),
 							};
 						}
+					),
+				},
+				settings: {
+					joinDate: JSON.parse(
+						localStorage.getItem('settings-joined') || `${Date.now()}`
 					),
 				},
 			};
@@ -140,10 +148,18 @@ function getCurrent(version: Version): MigratableData {
 						return { ...data, ...list };
 					}),
 				},
+				settings: {
+					joinDate: JSON.parse(
+						localStorage.getItem('settings-join-date') || `${Date.now()}`
+					),
+				},
 			};
 
 		default:
-			return { main: { items: [], categories: [] } };
+			return {
+				main: { items: [], categories: [] },
+				settings: { joinDate: Date.now() },
+			};
 			break;
 	}
 }
@@ -187,6 +203,10 @@ function toCurrent(to: Version, data: MigratableData) {
 					}),
 					categories: data.main.categories.map((ca) => deserializeCategory(ca)),
 				})
+			);
+			localStorage.setItem(
+				'settings-join-date',
+				JSON.stringify(data.settings.joinDate)
 			);
 			break;
 	}
