@@ -1,5 +1,11 @@
 <script lang="ts">
 	import Install from '../components/settings/Install.svelte';
+	import Alert from '../components/page/Alert.svelte';
+
+	let reinstall = false;
+	if (location.href.endsWith('?src=pwa')) {
+		reinstall = true;
+	}
 
 	let installVisible = false;
 	function install() {
@@ -18,6 +24,10 @@
 	</div>
 	<Install bind:visible={installVisible} />
 </div>
+<Alert
+	text="Due to a recent update, you have to reinstall Vanilla by navigating to vanilla.manen.me in your web browser."
+	bind:visible={reinstall}
+/>
 
 <style>
 	.index {
