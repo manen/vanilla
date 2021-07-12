@@ -35,7 +35,7 @@
 		gap: 0.6rem;
 	}
 	.text {
-		margin-bottom: 0.3rem;
+		margin-bottom: 0.35rem;
 		text-align: center;
 	}
 </style>

@@ -35,7 +35,7 @@
 	if (migrateIfNeeded()) {
 		location.reload();
 	} else {
-		// we need this here, otherwise it would immediately trigget before the
+		// we need this here, otherwise it would immediately trigger before the
 		// refresh, and the popup would disappear after the reload
 		justMigrated = didJustMigrate();
 	}
