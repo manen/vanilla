@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import type { Readable, Updater } from 'svelte/store';
 import { nanoid } from 'nanoid';
-import { flatItems } from './utils';
+import type { Color } from './color';
 
 // # Design
 //
@@ -33,6 +33,7 @@ export interface Category {
 	name: string;
 	items: string[];
 	categories: string[];
+	color?: Color;
 	parent?: string;
 }
 export interface Item {

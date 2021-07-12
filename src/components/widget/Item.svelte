@@ -1,13 +1,23 @@
 <script lang="ts">
-	import { item as get } from '../../stores';
-	import type { ItemStore } from '../../stores';
+	import { category, item as get } from '../../stores';
+	import type { ItemStore, CategoryStore } from '../../stores';
+	import { findColor } from '../../utils';
+	import type { Color } from '../../color';
 
 	export let id = '';
 	let item: ItemStore = get(id);
 	$: item = get(id);
+
+	let c: CategoryStore | undefined = $item.parent
+		? category($item.parent)
+		: undefined;
+	$: c = $item.parent ? category($item.parent) : undefined;
+
+	let co: Color | undefined = c ? findColor(c) : undefined;
+	$: co = c ? findColor(c) : undefined;
 </script>
 
-<div class="widget">
+<div class={`widget ${co || ''}`}>
 	<div class="name">{$item.name}</div>
 	<div class="amount">
 		{#if $item.amount > 1 || $item.unit}

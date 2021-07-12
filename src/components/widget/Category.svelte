@@ -1,23 +1,28 @@
 <script lang="ts">
 	import { category as get } from '../../stores';
+	import { findColor } from '../../utils';
 	import type { CategoryStore } from '../../stores';
+	import type { Color } from '../../color';
 
 	export let id = '';
-	let category: CategoryStore = get(id);
-	$: category = get(id);
+	let c: CategoryStore = get(id);
+	$: c = get(id);
+
+	let co: Color | undefined = c ? findColor(c) : undefined;
+	$: co = c ? findColor(c) : undefined;
 </script>
 
-<div class="widget">
-	<div class="name">{$category.name}</div>
+<div class={`widget ${co || ''}`}>
+	<div class="name">{$c.name}</div>
 	<div class="details">
 		<div class="items-length">
-			{#if $category.items.length > 0}
-				{$category.items.length} items
+			{#if $c.items.length > 0}
+				{$c.items.length} items
 			{/if}
 		</div>
 		<div class="categories-length">
-			{#if $category.categories.length > 0}
-				{$category.categories.length} categories
+			{#if $c.categories.length > 0}
+				{$c.categories.length} categories
 			{/if}
 		</div>
 	</div>

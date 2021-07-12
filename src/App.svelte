@@ -101,6 +101,37 @@
 		padding: 0px;
 	}
 
+	:global(.pink) {
+		color: #dd7373;
+	}
+	:global(.gray) {
+		color: #5f5566;
+	}
+	:global(.green) {
+		color: #70ae6e;
+	}
+	:global(.blue) {
+		color: #48acf0;
+	}
+	:global(.gold) {
+		color: #f6ca83;
+	}
+	:global(.bg-pink) {
+		background-color: #dd7373;
+	}
+	:global(.bg-gray) {
+		background-color: #5f5566;
+	}
+	:global(.bg-green) {
+		background-color: #70ae6e;
+	}
+	:global(.bg-blue) {
+		background-color: #48acf0;
+	}
+	:global(.bg-gold) {
+		background-color: #f6ca83;
+	}
+
 	main {
 		margin: 1rem;
 	}
