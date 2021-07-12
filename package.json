@@ -11,7 +11,6 @@
 		"test": "web-test-runner \"src/**/*.test.ts\""
 	},
 	"dependencies": {
-		"longpress-svelte": "^1.0.0",
 		"nanoid": "^3.1.23",
 		"svelte": "^3.37.0",
 		"svelte-routing": "^1.6.0",
