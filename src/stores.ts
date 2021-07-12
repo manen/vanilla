@@ -32,11 +32,13 @@ export interface Category {
 	name: string;
 	items: string[];
 	categories: string[];
+	parent?: string;
 }
 export interface Item {
 	name: string;
 	amount: number;
 	unit: string;
+	parent?: string;
 }
 export interface List {
 	items: string[];
@@ -45,12 +47,14 @@ export interface List {
 export interface MainStore extends Readable<Main> {
 	pushItem(...items: Item[]): void;
 	pushCategory(...categories: Category[]): void;
+	removeItem(id: string): void;
 }
 export interface CategoryStore extends Readable<Category> {
 	pushItem(...items: Item[]): void;
 	pushCategory(...categories: Category[]): void;
 	setName(name: string): void;
 	set(category: Category): void;
+	removeItem(id: string): void;
 }
 export interface ItemStore extends Readable<Item> {
 	setName(name: string): void;
@@ -58,6 +62,8 @@ export interface ItemStore extends Readable<Item> {
 	setUnit(unit: string): void;
 	set(item: Item): void;
 }
+type OrphanItem = Item & { parent: undefined };
+type OrphanCategory = Category & { parent: undefined };
 
 const mainID = () => 'data-main';
 const categoryID = (id: string) => `data-category-${id}`;
@@ -81,10 +87,14 @@ function pushItemID(update: (fn: Updater<any>) => void, ...items: string[]) {
 	});
 }
 function createPushItem(
-	update: (fn: Updater<any>) => void
-): (...items: Item[]) => void {
+	update: (fn: Updater<any>) => void,
+	parent?: string
+): (...items: OrphanItem[]) => void {
 	return (...items) => {
-		pushItemID(update, ...items.map((item) => createItemID(item)));
+		pushItemID(
+			update,
+			...items.map((item) => createItemID({ ...item, parent }))
+		);
 	};
 }
 
@@ -105,12 +115,13 @@ function pushCategoryID(
 	});
 }
 function createPushCategory(
-	update: (fn: Updater<any>) => void
-): (...categories: Category[]) => void {
+	update: (fn: Updater<any>) => void,
+	parent?: string
+): (...categories: OrphanCategory[]) => void {
 	return (...categories) => {
 		pushCategoryID(
 			update,
-			...categories.map((category) => createCategoryID(category))
+			...categories.map((category) => createCategoryID({ ...category, parent }))
 		);
 	};
 }
@@ -137,17 +148,26 @@ function createMain(): MainStore {
 		});
 	}
 
+	function removeItem(id: string) {
+		update((m) => {
+			return { ...m, items: m.items.filter((i) => i != id) };
+		});
+		localStorage.removeItem(itemID(id));
+	}
+
 	return {
 		subscribe: raw.subscribe,
 		pushItem: createPushItem(update),
 		pushCategory: createPushCategory(update),
+		removeItem,
 	};
 }
 function createCategory(id: string): CategoryStore {
+	console.log(`Creating category ${id}`);
 	const raw = writable<Category>(
 		localStorage.getItem(categoryID(id))
 			? JSON.parse(localStorage.getItem(categoryID(id)) || '')
-			: { name: '', items: [] }
+			: { name: '', items: [], categories: [] }
 	);
 
 	function set(value: Category) {
@@ -169,12 +189,22 @@ function createCategory(id: string): CategoryStore {
 		});
 	}
 
+	function removeItem(iid: string) {
+		update((m) => {
+			console.log(m);
+
+			return { ...m, items: m.items.filter((i) => i != iid) };
+		});
+		localStorage.removeItem(itemID(iid));
+	}
+
 	return {
 		subscribe: raw.subscribe,
-		pushItem: createPushItem(update),
-		pushCategory: createPushCategory(update),
+		pushItem: createPushItem(update, id),
+		pushCategory: createPushCategory(update, id),
 		setName,
 		set,
+		removeItem,
 	};
 }
 function createItem(id: string): ItemStore {

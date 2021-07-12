@@ -1,20 +1,28 @@
 <script lang="ts">
-	import { category, main } from '../../stores';
+	import { category, item, main } from '../../stores';
+	import type { ItemStore } from '../../stores';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
+	export let id: string | undefined;
 	export let parent: string | undefined;
 
-	let name: string = '';
-	let amount: number = 1;
-	let unit: string = '';
+	let i: ItemStore | undefined = id ? item(id) : undefined;
+
+	let name: string = i ? $i.name : '';
+	let amount: number = i ? $i.amount : 1;
+	let unit: string = i ? $i.unit : '';
 
 	function create() {
-		(parent ? category(parent) : main).pushItem({
-			name,
-			amount,
-			unit,
-		});
+		if (!id) {
+			(parent ? category(parent) : main).pushItem({
+				name,
+				amount,
+				unit,
+			});
+		} else {
+			i?.set({ name, amount, unit });
+		}
 		dispatch('done');
 	}
 </script>
@@ -28,7 +36,14 @@
 		placeholder="Amount"
 	/>
 	<input type="text" bind:value={unit} class="unit" placeholder="Unit" />
-	<button type="submit" class="create">Create {name}</button>
+	<button type="submit" class="create">
+		{#if !id}
+			Create
+		{:else}
+			Edit
+		{/if}
+		{name}</button
+	>
 </form>
 
 <style>

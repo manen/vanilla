@@ -38,11 +38,12 @@ export function didJustMigrate(): boolean {
 export function migrateIfNeeded(): boolean {
 	const actual = getVersion();
 	if (actual == current) {
+		localStorage.setItem('storage-version', current);
 		return false;
 	} else {
 		migrate(actual, current);
-		localStorage.setItem('storage-version', current);
 		localStorage.setItem('storage-migrated', '1');
+		localStorage.setItem('storage-version', current);
 		return true;
 	}
 }
@@ -149,18 +150,28 @@ function getCurrent(version: Version): MigratableData {
 function toCurrent(to: Version, data: MigratableData) {
 	switch (to) {
 		case two:
-			function deserializeCategory(c: MigratableCategory): string {
+			function deserializeCategory(
+				c: MigratableCategory,
+				parent?: string
+			): string {
 				const id = nanoid();
 				localStorage.setItem(
 					`data-category-${id}`,
 					JSON.stringify({
 						...c,
+						parent,
 						items: c.items.map((i) => {
-							const id = nanoid();
-							localStorage.setItem(`data-item-${id}`, JSON.stringify(i));
-							return id;
+							const iid = nanoid();
+							localStorage.setItem(
+								`data-item-${iid}`,
+								JSON.stringify({
+									...i,
+									parent: id,
+								})
+							);
+							return iid;
 						}),
-						categories: c.categories.map(deserializeCategory),
+						categories: c.categories.map((ca) => deserializeCategory(ca, id)),
 					})
 				);
 				return id;
@@ -174,7 +185,7 @@ function toCurrent(to: Version, data: MigratableData) {
 						localStorage.setItem(`data-item-${id}`, JSON.stringify(i));
 						return id;
 					}),
-					categories: data.main.categories.map(deserializeCategory),
+					categories: data.main.categories.map((ca) => deserializeCategory(ca)),
 				})
 			);
 			break;
