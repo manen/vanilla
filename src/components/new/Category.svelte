@@ -77,7 +77,4 @@
 	.bg-undefined {
 		border: 1px solid #cccccc;
 	}
-
-	@media (prefers-color-scheme: dark) {
-	}
 </style>
