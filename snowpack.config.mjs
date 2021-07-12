@@ -20,7 +20,7 @@ const config = {
 	optimize: {
 		bundle: true,
 		sourcemap: false,
-		splitting: true,
+		splitting: false,
 		treeshake: true,
 		minify: true,
 		target: 'es2020',

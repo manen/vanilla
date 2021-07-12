@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import type { Readable, Updater } from 'svelte/store';
 import { nanoid } from 'nanoid';
+import { flatItems } from './utils';
 
 // # Design
 //
@@ -48,6 +49,7 @@ export interface MainStore extends Readable<Main> {
 	pushItem(...items: Item[]): void;
 	pushCategory(...categories: Category[]): void;
 	removeItem(id: string): void;
+	removeCategory(id: string): void;
 }
 export interface CategoryStore extends Readable<Category> {
 	pushItem(...items: Item[]): void;
@@ -55,6 +57,7 @@ export interface CategoryStore extends Readable<Category> {
 	setName(name: string): void;
 	set(category: Category): void;
 	removeItem(id: string): void;
+	removeCategory(id: string): void;
 }
 export interface ItemStore extends Readable<Item> {
 	setName(name: string): void;
@@ -154,12 +157,25 @@ function createMain(): MainStore {
 		});
 		localStorage.removeItem(itemID(id));
 	}
+	function removeCategory(id: string) {
+		const cat = category(id);
+		cat.subscribe((val) => {
+			console.log(val);
+			val.categories.forEach((cid) => cat.removeCategory(cid));
+			val.items.forEach((iid) => cat.removeItem(iid));
+		})();
+		update((m) => {
+			return { ...m, categories: m.categories.filter((i) => i != id) };
+		});
+		localStorage.removeItem(categoryID(id));
+	}
 
 	return {
 		subscribe: raw.subscribe,
 		pushItem: createPushItem(update),
 		pushCategory: createPushCategory(update),
 		removeItem,
+		removeCategory,
 	};
 }
 function createCategory(id: string): CategoryStore {
@@ -197,6 +213,18 @@ function createCategory(id: string): CategoryStore {
 		});
 		localStorage.removeItem(itemID(iid));
 	}
+	function removeCategory(id: string) {
+		const cat = category(id);
+		cat.subscribe((val) => {
+			console.log(val);
+			val.categories.forEach((cid) => cat.removeCategory(cid));
+			val.items.forEach((iid) => cat.removeItem(iid));
+		})();
+		update((m) => {
+			return { ...m, categories: m.categories.filter((i) => i != id) };
+		});
+		localStorage.removeItem(categoryID(id));
+	}
 
 	return {
 		subscribe: raw.subscribe,
@@ -205,6 +233,7 @@ function createCategory(id: string): CategoryStore {
 		setName,
 		set,
 		removeItem,
+		removeCategory,
 	};
 }
 function createItem(id: string): ItemStore {
