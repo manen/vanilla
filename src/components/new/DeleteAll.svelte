@@ -22,7 +22,7 @@
 			})();
 		});
 		dismiss();
-		location.reload(); // TODO make it not be shit
+		if (flat) location.reload(); // TODO make it not be shit
 	}
 </script>
 
