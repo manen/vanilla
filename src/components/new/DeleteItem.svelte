@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { category, item, main } from '../../stores';
-	import type { CategoryStore, ItemStore } from '../../stores';
+	import type { ItemStore } from '../../stores';
 	import { navigate } from 'svelte-routing';
 	const dispatch = createEventDispatcher();
 

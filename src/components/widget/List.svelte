@@ -8,24 +8,38 @@
 	import Popup from '../page/Popup.svelte';
 	import NewItem from '../new/Item.svelte';
 	import NewCategory from '../new/Category.svelte';
+	import DeleteAll from '../new/DeleteAll.svelte';
 
 	export let list: List;
 	export let id: string | undefined = undefined;
 	export let flat: boolean = false;
 
+	let mock = 0;
+
 	let newItemVisible = false;
 	let newCategoryVisible = false;
+	let deleteAllVisible = false;
 
 	function newItemClick() {
 		newCategoryVisible = false;
+		deleteAllVisible = false;
 		newItemVisible = true;
 	}
 	function newCategoryClick() {
 		newItemVisible = false;
+		deleteAllVisible = false;
 		newCategoryVisible = true;
+	}
+	function deleteAllClick() {
+		newItemVisible = false;
+		newCategoryVisible = false;
+		deleteAllVisible = true;
 	}
 </script>
 
+<div style="display: none;">
+	{mock}
+</div>
 <div class="overview">
 	<div>
 		<div class="title">
@@ -37,6 +51,7 @@
 				{/if}
 			</h2>
 			<div class="new-container">
+				<button class="new" on:click={deleteAllClick}>Delete</button>
 				<button class="new" on:click={newItemClick}>New</button>
 			</div>
 		</div>
@@ -78,6 +93,11 @@
 	bind:visible={newCategoryVisible}
 	props={{ parent: id }}
 />
+<Popup
+	component={DeleteAll}
+	bind:visible={deleteAllVisible}
+	props={{ id, flat }}
+/>
 
 <style>
 	a {
@@ -101,6 +121,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
+		gap: 0.3rem;
 	}
 
 	.empty {
